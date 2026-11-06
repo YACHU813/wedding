@@ -7,13 +7,13 @@
   <title>YANG & KU — 14 FEB 2027</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
   <style>
     :root{--ink:#252525;--muted:#717171;--silver:#c0c0c0;--line:#dededb;--paper:#f7f7f5;--white:#fff;--shadow:0 14px 42px rgba(27,27,27,.07),0 3px 12px rgba(27,27,27,.035)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font:300 14px/2 'Noto Serif TC',serif}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.en{font-family:'Cormorant Garamond',serif}.no-wrap{white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important}.key-location{display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:bottom}.key-location::-webkit-scrollbar{display:none}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font:500 14px/1.95 'Source Han Sans TC','Noto Sans TC','PingFang TC',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.en{font-family:'Cormorant Garamond',serif}.no-wrap{white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important}.key-location{display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;vertical-align:bottom}.key-location::-webkit-scrollbar{display:none}
     .nav{position:fixed;z-index:20;top:16px;left:50%;transform:translateX(-50%);width:min(690px,calc(100% - 28px));padding:14px 24px;border:1px solid rgba(255,255,255,.75);border-radius:999px;display:flex;justify-content:space-around;align-items:center;gap:10px;background:rgba(244,244,244,.75);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:0 9px 30px rgba(0,0,0,.075)}.nav a{font-size:12px;letter-spacing:.12em;white-space:nowrap}
     .hero{height:100svh;min-height:580px;position:relative;background:#1a1a1a;display:flex;align-items:flex-end;color:white}.collage{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}.collage img{height:100%;width:100%;min-width:0;object-fit:cover;object-position:center;filter:saturate(.72) contrast(.96)}.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.09),rgba(0,0,0,.1) 48%,rgba(0,0,0,.7))}.hero-copy{position:relative;z-index:2;padding:0 clamp(24px,7vw,115px) clamp(60px,10vh,110px)}.kicker{font-size:12px;letter-spacing:.3em}.hero h1{margin:8px 0 18px;font:400 clamp(76px,12vw,155px)/.76 'Cormorant Garamond',serif;letter-spacing:-.025em}.hero-date{font-size:clamp(18px,2.5vw,29px);letter-spacing:.16em}.tagline{margin-top:8px;font:italic 400 clamp(20px,2.3vw,27px)/1.4 'Cormorant Garamond',serif}
-    section{padding:100px 20px}.wrap{width:min(900px,100%);margin:auto}.head{text-align:center;margin-bottom:46px}.head .overline{color:#888;letter-spacing:.3em;font-size:14px}.head h2{margin:5px 0 0;font:400 clamp(42px,6vw,58px)/1.2 'Cormorant Garamond','Noto Serif TC',serif}.head p{color:#777;font-size:12px;letter-spacing:.1em}.intro{text-align:center;max-width:630px;margin:auto;line-height:2.5}.monogram{font:400 35px 'Cormorant Garamond',serif;letter-spacing:.15em;padding:23px}
+    section{padding:100px 20px}.wrap{width:min(900px,100%);margin:auto}.head{text-align:center;margin-bottom:46px}.head .overline{color:#888;letter-spacing:.3em;font-size:14px}.head h2{margin:5px 0 0;font:400 clamp(42px,6vw,58px)/1.2 'Cormorant Garamond','Source Han Sans TC','Noto Sans TC',sans-serif}.head p{color:#777;font-size:12px;letter-spacing:.1em}.intro{text-align:center;max-width:630px;margin:auto;line-height:2.5}.monogram{font:400 35px 'Cormorant Garamond',serif;letter-spacing:.15em;padding:23px}
     .counting{background:linear-gradient(145deg,#ededec,#fafafa)}.countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.timer{min-width:0;min-height:168px;border-radius:24px;border:1px solid white;background:linear-gradient(145deg,#fff,rgba(250,250,250,.94));box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.timer:before{content:'';position:absolute;left:13%;top:-25%;height:48%;width:74%;background:#fff;filter:blur(22px)}.timer-inner{position:relative;display:flex;align-items:center;gap:13px}.timer-num{font:400 clamp(48px,6.5vw,73px)/1 'Cormorant Garamond',serif;font-variant-numeric:tabular-nums;min-width:50px;text-align:center}.timer-rule{width:1px;height:53px;background:linear-gradient(transparent,#b1b1b1,transparent)}.timer-unit{writing-mode:vertical-rl;font:400 11px 'Cormorant Garamond',serif;letter-spacing:.13em;color:#777}
     .timeline{position:relative;max-width:710px;margin:0 auto}.timeline:before{content:'';position:absolute;top:5px;bottom:5px;width:1px;left:50%;background:var(--line)}.event{position:relative;width:calc(50% - 36px);padding:28px;border:1px solid #e4e4e1;border-radius:22px;background:rgba(255,255,255,.92);box-shadow:var(--shadow);margin-bottom:32px}.event:nth-child(odd){text-align:right;margin-right:auto}.event:nth-child(even){text-align:left;margin-left:auto}.event:before{content:'';position:absolute;top:37px;width:10px;height:10px;border:5px solid var(--paper);border-radius:50%;background:var(--silver)}.event:nth-child(odd):before{right:-47px}.event:nth-child(even):before{left:-47px}.event .time{font:400 18px 'Cormorant Garamond',serif;letter-spacing:.1em;color:#8a8a8a}.event h3{margin:4px 0 0;font-size:18px;font-weight:500}.event .sub{color:#999;font-size:12px;letter-spacing:.11em}.event p{font-size:12px;color:#626262;margin:11px 0 0}.dots{display:flex;gap:9px;margin-top:13px}.event:nth-child(odd) .dots{justify-content:flex-end}.dots span{width:18px;height:18px;border:1px solid #bbb;border-radius:50%}.transport{max-width:710px;margin:65px auto 0}.acc{border-top:1px solid #c9c9c9}.acc:last-child{border-bottom:1px solid #c9c9c9}.acc button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:21px 2px;border:0;background:transparent;text-align:left;font-size:14px}.acc .plus{font:200 26px/1 Arial,sans-serif;transition:transform .25s}.acc.open .plus{transform:rotate(45deg)}.acc .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}.acc.open .panel{grid-template-rows:1fr}.acc .inner{overflow:hidden}.acc .contents{padding:0 2px 22px;color:#676767;font-size:12px;line-height:2.1}
     .event .lunch-times{display:grid;gap:8px;margin:12px 0 16px;padding:13px 0;border-top:1px solid #ececea;border-bottom:1px solid #ececea}
@@ -25,14 +25,73 @@
     [hidden]{display:none!important} :focus-visible{outline:2px solid #707070;outline-offset:5px}.input{font-size:16px}.form-card{min-width:0}.hero-copy{max-width:100%}.key-location{touch-action:pan-x}.event .sub{color:#727272}.help{color:#666}
     @media(max-width:680px){.collage{grid-template-columns:1fr 1fr;grid-template-rows:60% 40%}.collage img:first-child{grid-column:1/-1;object-position:50% 38%}.hero h1{font-size:clamp(68px,20vw,105px)}.hero-copy{padding-bottom:35px}.tagline{max-width:290px}.timer-num{font-size:48px}.timer-inner{gap:7px}.form-card{padding:26px 20px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+    /* ── 思源黑體 Medium（所有中文介面） ──
+       Source Han Sans TC 與 Noto Sans TC 為 Adobe/Google 聯合開發的字型家族。
+       優先使用系統已安裝的思源黑體；其他裝置使用線上 Noto Sans TC 500。
+       英文的 Cormorant Garamond 保留原雜誌風格。 */
+    :lang(zh-Hant), body, button, input, select, textarea {
+      font-family:'Source Han Sans TC','Noto Sans TC','PingFang TC',sans-serif;
+      font-weight:500;
+    }
+    .head h2,.event h3,.event p,.legend,.field>label,.intro,.nav a,.acc button,.acc .contents {
+      font-family:'Source Han Sans TC','Noto Sans TC','PingFang TC',sans-serif;
+      font-weight:500;
+    }
+    .en,.hero h1,.hero-date,.kicker,.tagline,.timer-num,.timer-unit,.event .time,.event .lunch-time .clock,.footer .names,.footer .date,.monogram {
+      font-family:'Cormorant Garamond',serif;
+    }
+    /* Safari：絕不拉伸影像，固定每個網格的可計算尺寸 */
+    .collage { min-width:0; min-height:0; }
+    .collage img { display:block; min-height:0; max-width:100%; min-width:0; height:100%; object-fit:cover; }
+    .hero { height:100vh; height:100svh; overflow:hidden; }
+    .hero-copy { max-width:100%; }
+
+    @media(max-width:680px) {
+      /* iPhone：改為三條完整寬度的編輯式拼貼。
+         第一、二張是直式肖像，第三張是橫式雙人照；
+         不再讓橫式照片擠進半寬格而只剩中間空白。 */
+      .hero { height:100svh; min-height:0; }
+      .collage {
+        display:grid;
+        grid-template-columns:minmax(0,1fr);
+        grid-template-rows:minmax(0,34fr) minmax(0,34fr) minmax(0,32fr);
+        gap:2px;
+        overflow:hidden;
+      }
+      .collage img:nth-child(1),
+      .collage img:nth-child(2),
+      .collage img:nth-child(3) {
+        grid-column:1;
+        width:100%;
+        min-height:0;
+        height:100%;
+        object-fit:cover;
+      }
+      .collage img:nth-child(1) { grid-row:1; object-position:50% 26%; }
+      .collage img:nth-child(2) { grid-row:2; object-position:50% 25%; }
+      .collage img:nth-child(3) { grid-row:3; object-position:50% 55%; }
+      .veil { background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.06) 44%,rgba(0,0,0,.25) 66%,rgba(0,0,0,.79) 100%); }
+      .hero-copy {
+        width:100%;
+        padding:0 22px calc(32px + env(safe-area-inset-bottom,0px));
+      }
+      .hero h1 { font-size:clamp(64px,18.5vw,92px); }
+      .tagline { font-size:clamp(18px,4.6vw,23px); max-width:330px; }
+      .nav { padding-top:12px; padding-bottom:12px; }
+    }
+    @media(max-width:360px) {
+      .nav a { font-size:10px; }
+      .hero h1 { font-size:64px; }
+      .hero-copy { padding-bottom:calc(22px + env(safe-area-inset-bottom,0px)); }
+    }
   </style>
 </head>
 <body>
   <nav class="nav"><a href="#about">關於我們</a><a href="#details">婚禮詳情</a><a href="#rsvp">出席回函</a></nav>
   <header class="hero">
-    <!-- 新相簿來源：https://postimg.cc/gallery/z1jQWQq -->
-    <!-- 注意：gallery URL 不是 .jpg 圖片直連；需貼入相簿中每張圖片的「Direct link」才能更換下面三個 img src。 -->
-    <div class="collage"><img src="https://i.postimg.cc/L87VV7mv/ya-zhu-0426.jpg" alt="YANG & KU 婚紗照一"><img src="https://i.postimg.cc/X7sLrqmn/ya-zhu-0441.jpg" alt="YANG & KU 婚紗照二"><img src="https://i.postimg.cc/P5cMMcd7/ya-zhu-0689.jpg" alt="YANG & KU 婚紗照三"></div>
+    <!-- 2026/11/06：三張婚紗照均使用 Postimages 直接圖片連結。 -->
+    <div class="collage"><img src="https://i.postimg.cc/6qFPkZrN/2nd-ya-zhu-0689.jpg" alt="YANG & KU 婚紗照一"><img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗照二"><img src="https://i.postimg.cc/qMCS8mr0/DCAAD27E-29D3-4273-8A48-D410180982F5.jpg" alt="YANG & KU 婚紗照三"></div>
     <div class="veil"></div><div class="hero-copy"><div class="kicker en">TOGETHER WITH OUR FAMILIES</div><h1>YANG<br>& KU</h1><div class="hero-date en">14 · FEB · 2027</div><div class="tagline">Yes to love, yes to the party. Join us?</div></div>
   </header>
   <section id="about"><div class="wrap"><div class="head"><div class="overline en">OUR STORY</div><h2>關於我們</h2></div><div class="intro">從相遇到相伴，從日常走向人生的下一頁。<br>我們想把這一天，留給一路陪伴著我們的重要的人。<div class="monogram">YANG & KU</div>謝謝你成為我們故事的一部分。<br>期待與你一起舉杯，見證屬於我們的新篇章。</div></div></section>
@@ -64,7 +123,7 @@
   </div></section>
   <section id="rsvp" class="rsvp"><div class="wrap"><div class="head"><div class="overline en">RSVP</div><h2>出席回函</h2><p>誠摯期待與你共享這一天</p></div><div class="form-card">
     <iframe id="googleFormTarget" name="googleFormTarget" hidden title="回函提交"></iframe>
-    <form id="weddingForm" autocomplete="off" method="POST" target="googleFormTarget" action="https://docs.google.com/forms/d/e/1FAIpQLScuCqqBs83kjeK42gfH5zCAM0h_Na7TsrvBqsbu0Eun4f3udw/formResponse">
+    <form id="weddingForm" autocomplete="off" method="POST" target="googleFormTarget" action="https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/formResponse">
       <div class="field"><label for="guestName">姓名 NAME <span class="req">*</span></label><input class="input" id="guestName" type="text" required></div>
       <div class="field"><label for="guestTitle">稱謂 TITLE <span class="req">*</span></label><select class="input" id="guestTitle" required><option value="" selected disabled>請選擇</option><option>先生</option><option>小姐</option><option>其他</option></select></div>
       <div class="field"><label for="relationship">與新人的關係 RELATIONSHIP <span class="req">*</span></label><select class="input" id="relationship" required><option value="" selected disabled>請選擇</option><option>女方親友</option><option>男方親友</option><option>女方同事</option><option>男方同事</option><option>女方長輩親友/同事</option><option>男方長輩親友/同事</option></select></div>
@@ -90,11 +149,11 @@
 'use strict';
 // 婚禮午宴倒數至 2027/02/14 12:30 開席（台灣時區，UTC+08:00）。
 const WEDDING_START = '2027-02-14T12:30:00+08:00';
- // Google Form 最新預填網址對應之正式表單（只使用 entry ID，不讀取預填值）：
- // https://docs.google.com/forms/d/e/1FAIpQLScuCqqBs83kjeK42gfH5zCAM0h_Na7TsrvBqsbu0Eun4f3udw/viewform
+ // 2026/11/06 新 Google Form；只使用 14 個 entry ID，不讀取任何預填測試內容：
+ // https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/viewform
  // Google 表單設定：請取消出席人數、兒童座椅數、葷食人數、素食人數、飲食禁忌、喜帖的後端必填。
 // 本頁會在出席時驗證必填；不出席不提交隱藏欄位。原表單目前為單頁，不需 pageHistory。
-const ENTRY={guestName:'1250708562',guestTitle:'980146254',relationship:'1297642372',attendance:'1524330920',phone:'113802631',guests:'448728581',chairs:'1733656601',meat:'1513390784',diet:'314282660',vegetarian:'1255541402',invitation:'1760689840',paperAddress:'2125765686',invitationEmail:'1495761488',message:'1481429914'};
+const ENTRY={guestName:'370827087',guestTitle:'919801842',relationship:'2140661446',attendance:'2011652596',phone:'1443124972',guests:'1341173196',chairs:'1939044139',meat:'211923289',diet:'1708015412',vegetarian:'1604047392',invitationEmail:'1918722791',invitation:'897447484',paperAddress:'696172559',message:'320495785'};
 const $=id=>document.getElementById(id), form=$('weddingForm');
 function countdown(){const n=Math.max(0,Math.floor((new Date(WEDDING_START)-Date.now())/1000));[Math.floor(n/86400),Math.floor(n%86400/3600),Math.floor(n%3600/60),n%60].forEach((v,i)=>$(['days','hours','minutes','seconds'][i]).textContent=String(v).padStart(i?2:3,'0'));}
 countdown();setInterval(countdown,1000);
