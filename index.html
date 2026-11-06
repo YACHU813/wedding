@@ -116,14 +116,33 @@
       .intro .story-verse { line-height:2.25; }
       .intro .story-invite { margin-top:26px; line-height:2.25; }
     }
+
+    /* 關於我們：YANG & KU 下方使用同一張橫幅照片，完整寬度、不裁掉人物 */
+    .about-banner {
+      width:min(750px,100%);
+      margin:20px auto 0;
+      overflow:hidden;
+      background:#f1f1ef;
+      box-shadow:0 10px 30px rgba(0,0,0,.05);
+    }
+    .about-banner img {
+      display:block;
+      width:100%;
+      height:auto;
+      max-width:100%;
+    }
+    @media(max-width:680px) {
+      .about-banner {width:100%;margin-top:12px;}
+      .collage img:nth-child(1) {object-position:50% 48%;}
+    }
   </style>
 </head>
 <body>
   <nav class="nav"><a href="#about">關於我們</a><a href="#details">婚禮詳情</a><a href="#rsvp">出席回函</a></nav>
   <header class="hero">
-    <!-- 手機版只使用兩張照片，移除原本男生背對鏡頭的第一張。 -->
+    <!-- 封面雙圖：第一張改用新橫幅照；第二張沿用上一版。 -->
     <div class="collage">
-      <img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗照" decoding="async" fetchpriority="high">
+      <img src="https://i.postimg.cc/HnY3kc8h/2nd-ya-zhu-0599.jpg" alt="YANG & KU 婚紗橫幅照" decoding="async" fetchpriority="high">
       <img src="https://i.postimg.cc/qMCS8mr0/DCAAD27E-29D3-4273-8A48-D410180982F5.jpg" alt="YANG & KU 雙人婚紗照" decoding="async">
     </div>
     <div class="veil"></div><div class="hero-copy"><div class="kicker en">TOGETHER WITH OUR FAMILIES</div><h1>YANG<br>& KU</h1><div class="hero-date en">14 · FEB · 2027</div><div class="tagline">Yes to love, yes to the party. Join us?</div></div>
@@ -141,6 +160,9 @@
         <p class="story-invite">親愛的家人、朋友，期待和你一起舉杯，一同慶祝這個幸福喜樂的時刻</p>
         <div class="monogram">YANG & KU</div>
       </div>
+      <figure class="about-banner">
+        <img src="https://i.postimg.cc/HnY3kc8h/2nd-ya-zhu-0599.jpg" alt="YANG & KU 婚紗橫幅照" loading="lazy" decoding="async">
+      </figure>
     </div>
   </section>
   <section class="counting"><div class="wrap"><div class="head"><div class="overline en">COUNTING DOWN</div><h2>距離我們的婚禮</h2></div><div class="countdown"><div class="timer"><div class="timer-inner"><span class="timer-num" id="days">000</span><span class="timer-rule"></span><span class="timer-unit">DAYS</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="hours">00</span><span class="timer-rule"></span><span class="timer-unit">HOURS</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="minutes">00</span><span class="timer-rule"></span><span class="timer-unit">MINUTES</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="seconds">00</span><span class="timer-rule"></span><span class="timer-unit">SECONDS</span></div></div></div></div></section>
@@ -183,7 +205,12 @@
 <div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="diet">飲食禁忌 DIETARY REQUIREMENTS <span class="req">*</span></label><select class="input" id="diet" data-attend-required><option value="" selected disabled>請選擇</option><option>不吃牛</option><option>不吃豬</option><option>無飲食禁忌</option><option>其他</option></select></div><div class="field" id="dietOtherGroup" hidden><label for="dietOther">其他飲食需求 OTHER DIETARY NEEDS <span class="req">*</span></label><input class="input" id="dietOther" type="text"></div>
-        <!-- 紙本喜帖：只有「是」才顯示地址；否才接續詢問電子喜帖。 -->
+        <!-- 所有出席者必填電子喜帖 Email，不再詢問是否需要電子喜帖。 -->
+        <div class="field" id="emailGroup">
+          <label for="invitationEmail">請填寫電子喜帖收件信箱 EMAIL ADDRESS <span class="req">*</span></label>
+          <input class="input" type="email" id="invitationEmail" autocomplete="off" data-attend-required>
+        </div>
+        <!-- Email 後才詢問是否需要紙本喜帖。 -->
         <div class="field" id="paperInviteQuestion">
           <span class="legend">是否需要紙本喜帖 PAPER INVITATION <span class="req">*</span></span>
           <div class="options">
@@ -191,20 +218,10 @@
             <label class="option"><input type="radio" name="paper_invitation_ui" value="no" id="paperInvitationNo">否</label>
           </div>
         </div>
+        <!-- 紙本選「是」才出現必填地址。 -->
         <div class="field conditional" id="paperAddressGroup">
           <label for="paperAddress">請填寫紙本喜帖收件地址 POSTAL ADDRESS <span class="req">*</span></label>
           <input class="input" type="text" id="paperAddress" autocomplete="off">
-        </div>
-        <div class="field conditional" id="emailInviteGroup">
-          <span class="legend">是否需要電子喜帖 DIGITAL INVITATION <span class="req">*</span></span>
-          <div class="options">
-            <label class="option"><input type="radio" name="email_invitation_ui" value="yes" id="emailInvitationYes">是</label>
-            <label class="option"><input type="radio" name="email_invitation_ui" value="no" id="emailInvitationNo">否</label>
-          </div>
-        </div>
-        <div class="field conditional" id="emailGroup">
-          <label for="invitationEmail">請填寫電子喜帖 EMAIL 收件信箱 EMAIL ADDRESS <span class="req">*</span></label>
-          <input class="input" type="email" id="invitationEmail" autocomplete="off">
         </div>
       </div>
       <div class="field" id="messageGroup"><label for="message">有什麼話想跟我們說🩶 MESSAGE</label><textarea class="input" id="message" rows="3"></textarea></div>
@@ -255,7 +272,7 @@ document.querySelectorAll('.acc').forEach((item,i) => {
   });
 });
 
-/* RSVP 分支：不出席 → 直接跳到留言；紙本是 → 才顯示地址。 */
+/* RSVP 分支：不出席 → 留言；出席 → 電子喜帖 Email 必填，紙本是 → 才顯示地址。 */
 const selected = name => form.querySelector('input[name="'+name+'"]:checked')?.value || '';
 const attendance = () => selected('attendance_ui');
 function conditional(id, show) {
@@ -267,24 +284,16 @@ function conditional(id, show) {
 function sync() {
   const attending=attendance()==='出席';
   conditional('attendingFields',attending);
+  // 出席才需要填寫 Email、出席人數與其他婚宴資訊。
   form.querySelectorAll('[data-attend-required]').forEach(el => el.required=attending);
   const paperYes=attending && selected('paper_invitation_ui')==='yes';
-  const paperNo=attending && selected('paper_invitation_ui')==='no';
   conditional('paperAddressGroup',paperYes);
   $('paperAddress').required=paperYes;
-  conditional('emailInviteGroup',paperNo);
-  const emailYes=paperNo && selected('email_invitation_ui')==='yes';
-  conditional('emailGroup',emailYes);
-  $('invitationEmail').required=emailYes;
   const other=attending && $('diet').value==='其他';
   conditional('dietOtherGroup',other);
   $('dietOther').required=other;
 }
 form.addEventListener('change', e => {
-  if (e.target.name==='paper_invitation_ui' && e.target.value==='yes') {
-    form.querySelectorAll('input[name="email_invitation_ui"]').forEach(el=>el.checked=false);
-    $('invitationEmail').value='';
-  }
   if (e.target.name==='paper_invitation_ui' && e.target.value==='no') $('paperAddress').value='';
   if (e.target.name==='attendance_ui' && attendance()==='不克出席') {
     form.querySelectorAll('#attendingFields input,#attendingFields select').forEach(el=>{
@@ -321,9 +330,7 @@ form.addEventListener('submit', e => {
   if(!form.reportValidity()) return;
   const attending=attendance()==='出席';
   const paper=attending && selected('paper_invitation_ui')==='yes';
-  const email=attending && selected('paper_invitation_ui')==='no' && selected('email_invitation_ui')==='yes';
   if (attending && !selected('paper_invitation_ui')) {status.textContent='請選擇是否需要紙本喜帖。';$('paperInvitationYes').focus();return;}
-  if (attending && selected('paper_invitation_ui')==='no' && !selected('email_invitation_ui')) {status.textContent='請選擇是否需要電子喜帖。';$('emailInvitationYes').focus();return;}
   if (attending && Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
   if (attending && Number($('chairs').value)>Number($('guests').value)) {status.textContent='兒童座椅數不可超過出席人數。';$('chairs').focus();return;}
   form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
@@ -347,10 +354,12 @@ form.addEventListener('submit', e => {
       entry('diet','__other_option__');
       add('entry.'+ENTRY.diet+'.other_option_response',$('dietOther').value.trim());
     }
-    const inviteValue=paper?'需要紙本喜帖':email?'需要電子喜帖':'都不需要';
-    entry('invitation',inviteValue);
+    // 原 Google Form 的「喜帖需求」仍是選擇題：
+    // 需要紙本→需要紙本喜帖；不需要紙本→需要電子喜帖。
+    entry('invitation',paper?'需要紙本喜帖':'需要電子喜帖');
+    // 無論是否索取紙本，出席者一律提交電子喜帖 Email。
+    entry('invitationEmail',$('invitationEmail').value.trim());
     if(paper) entry('paperAddress',$('paperAddress').value.trim());
-    if(email) entry('invitationEmail',$('invitationEmail').value.trim());
   }
   sending=true;
   submitBtn.disabled=true;
