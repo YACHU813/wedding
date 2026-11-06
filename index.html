@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f6f6f4">
-  <title>YANG & KU — 14 FEB 2027</title>
+  <title>YANG & KU | 2027.02.14 婚禮邀請</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
@@ -85,16 +85,64 @@
       .hero h1 { font-size:64px; }
       .hero-copy { padding-bottom:calc(22px + env(safe-area-inset-bottom,0px)); }
     }
+
+    /* ── 封面雙圖版：修復 iOS 先前的三格截斷拼貼 ── */
+    .hero { position:relative; height:100vh; height:100svh; min-height:0; overflow:hidden; isolation:isolate; }
+    .collage { position:absolute; inset:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-rows:minmax(0,1fr); gap:3px; overflow:hidden; }
+    .collage img { position:relative; display:block; width:100%; height:100%; max-width:100%; min-height:0; min-width:0; object-fit:cover; object-position:center; }
+    .collage img:nth-child(1) { grid-column:1; grid-row:1; object-position:50% 42%; }
+    .collage img:nth-child(2) { grid-column:2; grid-row:1; object-position:50% 48%; }
+    .veil { z-index:1; background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.07) 40%,rgba(0,0,0,.63) 100%); }
+    .hero-copy { z-index:2; }
+    @media (max-width:680px) {
+      .hero { height:100svh; min-height:0; max-height:none; }
+      .collage { display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(0,52fr) minmax(0,48fr); gap:2px; }
+      .collage img:nth-child(1) { grid-column:1; grid-row:1; object-position:50% 42%; }
+      .collage img:nth-child(2) { grid-column:1; grid-row:2; object-position:50% 45%; }
+      .hero-copy { left:0; right:0; bottom:0; width:100%; padding:0 22px calc(35px + env(safe-area-inset-bottom,0px)); }
+      .veil { background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.05) 38%,rgba(0,0,0,.35) 64%,rgba(0,0,0,.82) 100%); }
+      .kicker { font-size:clamp(9px,2.5vw,12px); letter-spacing:.20em; }
+      .hero h1 { font-size:clamp(61px,18vw,88px); }
+      .hero-date { font-size:clamp(17px,4.8vw,24px); }
+      .tagline { max-width:calc(100vw - 44px); font-size:clamp(17px,4.5vw,22px); }
+    }
+    .backup-form-link { display:block; width:max-content; max-width:100%; margin:16px auto 0; font-size:11px; color:#666; text-decoration:underline; text-underline-offset:3px; }
+
+    /* 關於我們：保留詩句節奏，手機版自動換行但不超出螢幕 */
+    .intro .story-verse { margin:0; line-height:2.55; }
+    .intro .story-invite { margin:30px auto 0; max-width:560px; line-height:2.45; }
+    .intro .monogram { padding-top:28px; }
+    @media(max-width:680px) {
+      .intro .story-verse { line-height:2.25; }
+      .intro .story-invite { margin-top:26px; line-height:2.25; }
+    }
   </style>
 </head>
 <body>
   <nav class="nav"><a href="#about">關於我們</a><a href="#details">婚禮詳情</a><a href="#rsvp">出席回函</a></nav>
   <header class="hero">
-    <!-- 2026/11/06：三張婚紗照均使用 Postimages 直接圖片連結。 -->
-    <div class="collage"><img src="https://i.postimg.cc/6qFPkZrN/2nd-ya-zhu-0689.jpg" alt="YANG & KU 婚紗照一"><img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗照二"><img src="https://i.postimg.cc/qMCS8mr0/DCAAD27E-29D3-4273-8A48-D410180982F5.jpg" alt="YANG & KU 婚紗照三"></div>
+    <!-- 手機版只使用兩張照片，移除原本男生背對鏡頭的第一張。 -->
+    <div class="collage">
+      <img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗照" decoding="async" fetchpriority="high">
+      <img src="https://i.postimg.cc/qMCS8mr0/DCAAD27E-29D3-4273-8A48-D410180982F5.jpg" alt="YANG & KU 雙人婚紗照" decoding="async">
+    </div>
     <div class="veil"></div><div class="hero-copy"><div class="kicker en">TOGETHER WITH OUR FAMILIES</div><h1>YANG<br>& KU</h1><div class="hero-date en">14 · FEB · 2027</div><div class="tagline">Yes to love, yes to the party. Join us?</div></div>
   </header>
-  <section id="about"><div class="wrap"><div class="head"><div class="overline en">OUR STORY</div><h2>關於我們</h2></div><div class="intro">從相遇到相伴，從日常走向人生的下一頁。<br>我們想把這一天，留給一路陪伴著我們的重要的人。<div class="monogram">YANG & KU</div>謝謝你成為我們故事的一部分。<br>期待與你一起舉杯，見證屬於我們的新篇章。</div></div></section>
+  <section id="about">
+    <div class="wrap">
+      <div class="head"><div class="overline en">OUR STORY</div><h2>關於我們</h2></div>
+      <div class="intro">
+        <p class="story-verse">
+          世界很大，大到兩個人的相遇，像是一場偶然。<br>
+          世界很小，小到後來所有關於未來的想像，都有彼此在其中。<br>
+          從相遇到相伴，從日常走向人生下一個篇章<br>
+          想把這一天，留給一路陪伴著我們的你。
+        </p>
+        <p class="story-invite">親愛的家人、朋友，期待和你一起舉杯，一同慶祝這個幸福喜樂的時刻</p>
+        <div class="monogram">YANG & KU</div>
+      </div>
+    </div>
+  </section>
   <section class="counting"><div class="wrap"><div class="head"><div class="overline en">COUNTING DOWN</div><h2>距離我們的婚禮</h2></div><div class="countdown"><div class="timer"><div class="timer-inner"><span class="timer-num" id="days">000</span><span class="timer-rule"></span><span class="timer-unit">DAYS</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="hours">00</span><span class="timer-rule"></span><span class="timer-unit">HOURS</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="minutes">00</span><span class="timer-rule"></span><span class="timer-unit">MINUTES</span></div></div><div class="timer"><div class="timer-inner"><span class="timer-num" id="seconds">00</span><span class="timer-rule"></span><span class="timer-unit">SECONDS</span></div></div></div></div></section>
   <section id="details"><div class="wrap"><div class="head"><div class="overline en">THE WEDDING DAY</div><h2>婚禮詳情</h2><p>2027.02.14 · SUNDAY</p></div>
     <div class="timeline">
@@ -135,46 +183,180 @@
 <div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="diet">飲食禁忌 DIETARY REQUIREMENTS <span class="req">*</span></label><select class="input" id="diet" data-attend-required><option value="" selected disabled>請選擇</option><option>不吃牛</option><option>不吃豬</option><option>無飲食禁忌</option><option>其他</option></select></div><div class="field" id="dietOtherGroup" hidden><label for="dietOther">其他飲食需求 OTHER DIETARY NEEDS <span class="req">*</span></label><input class="input" id="dietOther" type="text"></div>
-        <div class="field"><span class="legend">是否需要紙本／電子喜帖 INVITATION <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="invitation_ui" id="paperInvitation">需要紙本喜帖</label><label class="option"><input type="radio" name="invitation_ui" id="emailInvitation">需要電子喜帖</label><label class="option"><input type="radio" name="invitation_ui" id="noInvitation">都不需要</label></div></div>
-        <div class="field conditional" id="paperAddressGroup"><label for="paperAddress">紙本喜帖收件地址 POSTAL ADDRESS <span class="req">*</span></label><input class="input" type="text" id="paperAddress"></div>
-        <div class="field conditional" id="emailGroup"><label for="invitationEmail">電子喜帖 EMAIL 收件信箱 EMAIL ADDRESS <span class="req">*</span></label><input class="input" type="email" id="invitationEmail"></div>
+        <!-- 紙本喜帖：只有「是」才顯示地址；否才接續詢問電子喜帖。 -->
+        <div class="field" id="paperInviteQuestion">
+          <span class="legend">是否需要紙本喜帖 PAPER INVITATION <span class="req">*</span></span>
+          <div class="options">
+            <label class="option"><input type="radio" name="paper_invitation_ui" value="yes" id="paperInvitationYes" required>是</label>
+            <label class="option"><input type="radio" name="paper_invitation_ui" value="no" id="paperInvitationNo">否</label>
+          </div>
+        </div>
+        <div class="field conditional" id="paperAddressGroup">
+          <label for="paperAddress">請填寫紙本喜帖收件地址 POSTAL ADDRESS <span class="req">*</span></label>
+          <input class="input" type="text" id="paperAddress" autocomplete="off">
+        </div>
+        <div class="field conditional" id="emailInviteGroup">
+          <span class="legend">是否需要電子喜帖 DIGITAL INVITATION <span class="req">*</span></span>
+          <div class="options">
+            <label class="option"><input type="radio" name="email_invitation_ui" value="yes" id="emailInvitationYes">是</label>
+            <label class="option"><input type="radio" name="email_invitation_ui" value="no" id="emailInvitationNo">否</label>
+          </div>
+        </div>
+        <div class="field conditional" id="emailGroup">
+          <label for="invitationEmail">請填寫電子喜帖 EMAIL 收件信箱 EMAIL ADDRESS <span class="req">*</span></label>
+          <input class="input" type="email" id="invitationEmail" autocomplete="off">
+        </div>
       </div>
       <div class="field" id="messageGroup"><label for="message">有什麼話想跟我們說🩶 MESSAGE</label><textarea class="input" id="message" rows="3"></textarea></div>
       <button class="submit" type="submit" id="submitBtn">SEND RSVP</button>
       <p class="status" id="formStatus" aria-live="polite">資料僅供婚禮聯繫與席次安排使用。</p>
+      <a class="backup-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/viewform" target="_blank" rel="noopener noreferrer">無法送出？改用 Google 表單填寫</a>
     </form>
   </div></div></section>
   <footer class="footer"><div class="names">YANG & KU</div><div class="date">FEBRUARY 14 · 2027</div></footer>
   <script>
 'use strict';
-// 婚禮午宴倒數至 2027/02/14 12:30 開席（台灣時區，UTC+08:00）。
+/* 最終版本｜婚禮 2027-02-14 12:30（台灣時間） */
 const WEDDING_START = '2027-02-14T12:30:00+08:00';
- // 2026/11/06 新 Google Form；只使用 14 個 entry ID，不讀取任何預填測試內容：
- // https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/viewform
- // Google 表單設定：請取消出席人數、兒童座椅數、葷食人數、素食人數、飲食禁忌、喜帖的後端必填。
-// 本頁會在出席時驗證必填；不出席不提交隱藏欄位。原表單目前為單頁，不需 pageHistory。
-const ENTRY={guestName:'370827087',guestTitle:'919801842',relationship:'2140661446',attendance:'2011652596',phone:'1443124972',guests:'1341173196',chairs:'1939044139',meat:'211923289',diet:'1708015412',vegetarian:'1604047392',invitationEmail:'1918722791',invitation:'897447484',paperAddress:'696172559',message:'320495785'};
-const $=id=>document.getElementById(id), form=$('weddingForm');
-function countdown(){const n=Math.max(0,Math.floor((new Date(WEDDING_START)-Date.now())/1000));[Math.floor(n/86400),Math.floor(n%86400/3600),Math.floor(n%3600/60),n%60].forEach((v,i)=>$(['days','hours','minutes','seconds'][i]).textContent=String(v).padStart(i?2:3,'0'));}
-countdown();setInterval(countdown,1000);
-document.querySelectorAll('.acc').forEach((item,i)=>{const btn=item.querySelector('button'),panel=item.querySelector('.panel');panel.id='transport-'+i;btn.setAttribute('aria-controls',panel.id);panel.setAttribute('aria-hidden','true');btn.addEventListener('click',()=>{const open=!item.classList.contains('open');document.querySelectorAll('.acc').forEach(a=>{a.classList.remove('open');a.querySelector('button').setAttribute('aria-expanded','false');a.querySelector('.panel').setAttribute('aria-hidden','true');});item.classList.toggle('open',open);btn.setAttribute('aria-expanded',String(open));panel.setAttribute('aria-hidden',String(!open));});});
-const attendance=()=>form.querySelector('[name="attendance_ui"]:checked')?.value;
-function conditional(group,visible){group.classList.toggle('visible',visible);group.hidden=!visible;group.querySelectorAll('input,select,textarea').forEach(el=>el.disabled=!visible);}
-function sync(){const yes=attendance()==='出席';conditional($('attendingFields'),yes);form.querySelectorAll('[data-attend-required]').forEach(el=>el.required=yes);const paper=yes&&$('paperInvitation').checked,email=yes&&$('emailInvitation').checked;conditional($('paperAddressGroup'),paper);conditional($('emailGroup'),email);$('paperAddress').required=paper;$('invitationEmail').required=email;const other=yes&&$('diet').value==='其他';conditional($('dietOtherGroup'),other);$('dietOther').required=other;}
-form.addEventListener('change',e=>{sync();if(e.target.name==='attendance_ui'&&attendance()==='不克出席')$('messageGroup').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});});
-sync();
-let pending=false,timer;const status=$('formStatus'),button=$('submitBtn');
-function finish(text){clearTimeout(timer);pending=false;button.disabled=false;status.textContent=text;}
-$('googleFormTarget').addEventListener('load',()=>{if(pending)finish('已完成傳送嘗試，感謝你的回覆。如需確認收件，請與新人聯繫。');});
-form.addEventListener('submit',e=>{e.preventDefault();if(pending)return;sync();if(!form.reportValidity())return;const yes=attendance()==='出席';if(yes&&!form.querySelector('[name="invitation_ui"]:checked')){status.textContent='請選擇是否需要紙本／電子喜帖。';$('paperInvitation').focus();return;}
-if(yes&&Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)){status.textContent='葷食與素食人數合計，需等於出席人數（包含兒童）。';$('guests').focus();return;}
-if(yes&&Number($('chairs').value)>Number($('guests').value)){status.textContent='兒童座椅數不可超過出席人數。';$('chairs').focus();return;}
-form.querySelectorAll('.gf-submission').forEach(el=>el.remove());const add=(name,value)=>{const el=document.createElement('input');el.type='hidden';el.className='gf-submission';el.name=name;el.value=value;form.appendChild(el);};const entry=(key,val)=>add('entry.'+ENTRY[key],val);
-['guestName','relationship','message'].forEach(k=>entry(k,$(k).value.trim()));
-if($('guestTitle').value==='其他'){entry('guestTitle','__other_option__');add('entry.'+ENTRY.guestTitle+'.other_option_response','其他');}else entry('guestTitle',$('guestTitle').value);
-entry('attendance',attendance());if(yes){['phone','guests','chairs','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));const diet=$('diet').value;if(['不吃牛','不吃豬','無飲食禁忌'].includes(diet))entry('diet',diet);else{entry('diet','__other_option__');add('entry.'+ENTRY.diet+'.other_option_response',$('dietOther').value.trim());}
-entry('invitation',$('paperInvitation').checked?'需要紙本喜帖':$('emailInvitation').checked?'需要電子喜帖':'都不需要');if($('paperInvitation').checked)entry('paperAddress',$('paperAddress').value.trim());if($('emailInvitation').checked)entry('invitationEmail',$('invitationEmail').value.trim());}
-pending=true;button.disabled=true;status.textContent='正在傳送回函…';timer=setTimeout(()=>finish('尚未確認傳送狀態，請與新人確認後再重試。'),15000);HTMLFormElement.prototype.submit.call(form);
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/formResponse';
+/* 只使用 Google Form 的 14 個 entry ID，不引用任何預填測試值。 */
+const ENTRY = Object.freeze({
+  guestName:'370827087', guestTitle:'919801842', relationship:'2140661446',
+  attendance:'2011652596', phone:'1443124972', guests:'1341173196',
+  chairs:'1939044139', meat:'211923289', diet:'1708015412',
+  vegetarian:'1604047392', invitationEmail:'1918722791',
+  invitation:'897447484', paperAddress:'696172559', message:'320495785'
 });
-</script>
+const $ = id => document.getElementById(id);
+const form = $('weddingForm');
+form.action = FORM_URL;
+const status = $('formStatus'), submitBtn = $('submitBtn');
+function countdown() {
+  const n = Math.max(0, Math.floor((new Date(WEDDING_START).getTime() - Date.now()) / 1000));
+  [Math.floor(n/86400), Math.floor(n%86400/3600), Math.floor(n%3600/60), n%60]
+    .forEach((v,i) => $(['days','hours','minutes','seconds'][i]).textContent = String(v).padStart(i?2:3,'0'));
+}
+countdown(); setInterval(countdown,1000);
+
+/* 摺疊式交通資訊 */
+document.querySelectorAll('.acc').forEach((item,i) => {
+  const btn=item.querySelector('button'), panel=item.querySelector('.panel');
+  panel.id='transport-'+i;
+  btn.setAttribute('aria-controls',panel.id);
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click',()=>{
+    const show=!item.classList.contains('open');
+    document.querySelectorAll('.acc').forEach(el=>{
+      el.classList.remove('open');
+      el.querySelector('button').setAttribute('aria-expanded','false');
+    });
+    item.classList.toggle('open',show);
+    btn.setAttribute('aria-expanded',String(show));
+  });
+});
+
+/* RSVP 分支：不出席 → 直接跳到留言；紙本是 → 才顯示地址。 */
+const selected = name => form.querySelector('input[name="'+name+'"]:checked')?.value || '';
+const attendance = () => selected('attendance_ui');
+function conditional(id, show) {
+  const node=$(id);
+  node.hidden=!show;
+  node.classList.toggle('visible',show);
+  node.querySelectorAll('input,select,textarea').forEach(el => el.disabled=!show);
+}
+function sync() {
+  const attending=attendance()==='出席';
+  conditional('attendingFields',attending);
+  form.querySelectorAll('[data-attend-required]').forEach(el => el.required=attending);
+  const paperYes=attending && selected('paper_invitation_ui')==='yes';
+  const paperNo=attending && selected('paper_invitation_ui')==='no';
+  conditional('paperAddressGroup',paperYes);
+  $('paperAddress').required=paperYes;
+  conditional('emailInviteGroup',paperNo);
+  const emailYes=paperNo && selected('email_invitation_ui')==='yes';
+  conditional('emailGroup',emailYes);
+  $('invitationEmail').required=emailYes;
+  const other=attending && $('diet').value==='其他';
+  conditional('dietOtherGroup',other);
+  $('dietOther').required=other;
+}
+form.addEventListener('change', e => {
+  if (e.target.name==='paper_invitation_ui' && e.target.value==='yes') {
+    form.querySelectorAll('input[name="email_invitation_ui"]').forEach(el=>el.checked=false);
+    $('invitationEmail').value='';
+  }
+  if (e.target.name==='paper_invitation_ui' && e.target.value==='no') $('paperAddress').value='';
+  if (e.target.name==='attendance_ui' && attendance()==='不克出席') {
+    form.querySelectorAll('#attendingFields input,#attendingFields select').forEach(el=>{
+      if (el.type==='radio') el.checked=false;
+      else if (el.type!=='hidden') el.value='';
+    });
+    sync();
+    $('messageGroup').scrollIntoView({ behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'center' });
+  } else sync();
+});
+sync();
+
+/*
+ * 透過隱藏 iframe 傳送至 Google Forms，不會將預填網址內的測試文字放入輸入框。
+ * 注意：Google 不允許跨網域驗證 iframe 內的確認頁；載入不等於表單真正收件。
+ * 所以會顯示備援的 Google Form 連結，而不會虛稱「成功收件」。
+ * 若 Google Form 後台將「只出席時填寫」的題目設為必填，
+ * 不出席的送件可能仍會被 Google 擋下，必須同步調整表單設定。
+ */
+let sending=false, timeoutHandle;
+function finishSubmission(message) {
+  clearTimeout(timeoutHandle);
+  sending=false;
+  submitBtn.disabled=false;
+  status.textContent=message;
+}
+$('googleFormTarget').addEventListener('load', () => {
+  if (sending) finishSubmission('已完成傳送嘗試。由於 Google 限制，網站無法確認是否成功入表；若未收到資料請使用下方 Google 表單連結。');
+});
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if(sending) return;
+  sync();
+  if(!form.reportValidity()) return;
+  const attending=attendance()==='出席';
+  const paper=attending && selected('paper_invitation_ui')==='yes';
+  const email=attending && selected('paper_invitation_ui')==='no' && selected('email_invitation_ui')==='yes';
+  if (attending && !selected('paper_invitation_ui')) {status.textContent='請選擇是否需要紙本喜帖。';$('paperInvitationYes').focus();return;}
+  if (attending && selected('paper_invitation_ui')==='no' && !selected('email_invitation_ui')) {status.textContent='請選擇是否需要電子喜帖。';$('emailInvitationYes').focus();return;}
+  if (attending && Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
+  if (attending && Number($('chairs').value)>Number($('guests').value)) {status.textContent='兒童座椅數不可超過出席人數。';$('chairs').focus();return;}
+  form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
+  const add=(name,value)=>{
+    const el=document.createElement('input');
+    el.type='hidden';el.className='gf-submission';el.name=name;el.value=value;
+    form.appendChild(el);
+  };
+  const entry=(key,value)=>add('entry.'+ENTRY[key],value);
+  ['guestName','relationship','message'].forEach(k=>entry(k,$(k).value.trim()));
+  if($('guestTitle').value==='其他') {
+    entry('guestTitle','__other_option__');
+    add('entry.'+ENTRY.guestTitle+'.other_option_response','其他');
+  } else entry('guestTitle',$('guestTitle').value);
+  entry('attendance',attendance());
+  if(attending) {
+    ['phone','guests','chairs','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
+    const diet=$('diet').value;
+    if(['不吃牛','不吃豬','無飲食禁忌'].includes(diet)) entry('diet',diet);
+    else {
+      entry('diet','__other_option__');
+      add('entry.'+ENTRY.diet+'.other_option_response',$('dietOther').value.trim());
+    }
+    const inviteValue=paper?'需要紙本喜帖':email?'需要電子喜帖':'都不需要';
+    entry('invitation',inviteValue);
+    if(paper) entry('paperAddress',$('paperAddress').value.trim());
+    if(email) entry('invitationEmail',$('invitationEmail').value.trim());
+  }
+  sending=true;
+  submitBtn.disabled=true;
+  status.textContent='回函傳送中，請勿重複點擊…';
+  timeoutHandle=setTimeout(()=>finishSubmission('尚未確認送出狀態。如 Google 表單沒有資料，請使用下方連結直接填寫。'),15000);
+  HTMLFormElement.prototype.submit.call(form);
+});
+  </script>
 </body></html>
