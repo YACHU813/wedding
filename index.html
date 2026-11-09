@@ -135,9 +135,63 @@
       .about-banner {width:100%;margin-top:12px;}
       .collage img:nth-child(1) {object-position:50% 48%;}
     }
+
+    /* RSVP 完成後：切換為獨立感謝畫面，不顯示原本的表單與長頁面。 */
+    body.rsvp-complete > nav,
+    body.rsvp-complete > header,
+    body.rsvp-complete > section:not(#thankYouScreen),
+    body.rsvp-complete > footer { display:none !important; }
+    .thank-you-screen {
+      min-height:100vh;
+      min-height:100svh;
+      padding:calc(48px + env(safe-area-inset-top, 0px)) 22px
+              calc(48px + env(safe-area-inset-bottom, 0px));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at 50% 12%,#fff,#f7f7f5 65%,#ebebea);
+      text-align:center;
+    }
+    .thank-you-screen[hidden] { display:none !important; }
+    .thank-you-inner { width:min(540px,100%); }
+    .thank-you-kicker { font:400 18px 'Cormorant Garamond',serif; letter-spacing:.28em; color:#858585; }
+    .thank-you-title { font:400 clamp(60px,12vw,95px)/.95 'Cormorant Garamond',serif; margin:12px 0 28px; }
+    .thank-you-rule { display:block; width:1px; height:58px; margin:0 auto 30px; background:linear-gradient(transparent,#b8b8b8,transparent); }
+    .thank-you-message { font-size:clamp(18px,4vw,24px); line-height:1.8; font-weight:500; margin:0; }
+    .thank-you-date { margin:14px 0 0; font-size:clamp(14px,3.4vw,18px); line-height:1.9; font-weight:500; }
+    /* 感謝頁新增照片：完整等比顯示，手機不裁切、不橫向溢出。 */
+    .thank-you-photo { width:min(480px,100%); margin:26px auto 0; }
+    .thank-you-photo img { display:block; width:100%; height:auto; max-height:42svh; object-fit:contain; }
+    .thank-you-names { font:400 32px 'Cormorant Garamond',serif; letter-spacing:.09em; margin-top:28px; }
+    /* 畫面內容較長時允許自然捲動，避免小螢幕上下裁切。 */
+    .thank-you-screen { align-items:flex-start; }
+    .thank-you-inner { margin:auto; }
+    @media(max-width:680px) {
+      .thank-you-screen { padding:calc(26px + env(safe-area-inset-top, 0px)) 18px calc(26px + env(safe-area-inset-bottom, 0px)); }
+      .thank-you-photo { width:100%; margin-top:20px; }
+      .thank-you-photo img { max-height:36svh; }
+      .thank-you-names { margin-top:22px; }
+    }
+    .thank-you-back { border:1px solid #bdbdbb; border-radius:999px; padding:11px 25px; background:transparent; color:#555; font-size:12px; letter-spacing:.08em; margin-top:24px; }
+    .thank-you-back:hover { background:#fff; }
   </style>
 </head>
 <body>
+  <!-- 獨立的回函完成畫面：iframe 完成載入後才顯示。 -->
+  <section id="thankYouScreen" class="thank-you-screen" hidden aria-labelledby="thankYouTitle">
+    <div class="thank-you-inner">
+      <div class="thank-you-kicker">YANG & KU · RSVP</div>
+      <h1 id="thankYouTitle" class="thank-you-title" tabindex="-1">Thank You</h1>
+      <span class="thank-you-rule" aria-hidden="true"></span>
+      <p class="thank-you-message">填寫完成，謝謝您！</p>
+      <p class="thank-you-date">期待2027/2/14(日)與您相見！</p>
+      <figure class="thank-you-photo">
+        <img src="https://i.postimg.cc/5ykKnBkM/LINE-ALBUM-xiu-wan-yi-pi-tu-260827-1.jpg" alt="YANG & KU 感謝您的婚禮回函" loading="eager" decoding="async">
+      </figure>
+      <div class="thank-you-names">YANG & KU</div>
+      <button class="thank-you-back" id="backToWedding" type="button">返回婚禮資訊</button>
+    </div>
+  </section>
   <nav class="nav"><a href="#about">關於我們</a><a href="#details">婚禮詳情</a><a href="#rsvp">出席回函</a></nav>
   <header class="hero">
     <!-- 首頁雙圖：0599 為第一張，0795 為第二張；iOS 使用上下排列避免裁切跑版。 -->
@@ -152,12 +206,12 @@
       <div class="head"><div class="overline en">OUR STORY</div><h2>關於我們</h2></div>
       <div class="intro">
         <p class="story-verse">
-          從未預料的相識，走成了剛剛好的相遇。<br>
-          那些一起走過的路與日常，讓意外成了生命中最棒的禮物。<br>
-          感謝有你陪伴我們的故事，這天請和我們一起舉杯，<br>
-          見證小顧和雅筑人生新篇章的開啟，乾啦！。<br>
+          世界很大，大到兩個人的相遇，像是一場偶然。<br>
+          世界很小，小到後來所有關於未來的想像，都有彼此在其中。<br>
+          從相遇到相伴，從日常走向人生下一個篇章<br>
+          想把這一天，留給一路陪伴著我們的你。
         </p>
-        <p class="story-invite">親愛的家人、朋友，期待和你們一同慶祝最美好的時刻</p>
+        <p class="story-invite">親愛的家人、朋友，期待和你一起舉杯，一同慶祝這個幸福喜樂的時刻</p>
         <div class="monogram">YANG & KU</div>
       </div>
       <figure class="about-banner">
@@ -321,8 +375,22 @@ function finishSubmission(message) {
   submitBtn.disabled=false;
   status.textContent=message;
 }
+// Iframe 送出並載入 Google 回應後，切換至獨立的感謝畫面。
+// 由於跨網域限制，load 只能表示收到回應，無法讀取 Google 是否成功收件。
 $('googleFormTarget').addEventListener('load', () => {
-  if (sending) finishSubmission('已完成傳送嘗試。由於 Google 限制，網站無法確認是否成功入表；若未收到資料請使用下方 Google 表單連結。');
+  if (!sending) return; // 排除 iframe 初次載入
+  clearTimeout(timeoutHandle);
+  sending=false;
+  submitBtn.disabled=false;
+  $('thankYouScreen').hidden=false;
+  document.body.classList.add('rsvp-complete');
+  window.scrollTo(0,0);
+  $('thankYouTitle').focus({preventScroll:true});
+});
+$('backToWedding').addEventListener('click', () => {
+  document.body.classList.remove('rsvp-complete');
+  $('thankYouScreen').hidden=true;
+  $('rsvp').scrollIntoView({behavior:'smooth',block:'start'});
 });
 form.addEventListener('submit', e => {
   e.preventDefault();
