@@ -174,6 +174,26 @@
     }
     .thank-you-back { border:1px solid #bdbdbb; border-radius:999px; padding:11px 25px; background:transparent; color:#555; font-size:12px; letter-spacing:.08em; margin-top:24px; }
     .thank-you-back:hover { background:#fff; }
+
+    /* ── 首頁單張婚紗照，桌機及 iOS Safari 共用，完全移除舊拼貼的版面影響 ── */
+    .hero-single-photo {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      z-index:0;
+    }
+    .hero-single-photo img {
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center 44%;
+    }
+    @media (max-width:680px) {
+      .hero-single-photo img { object-position:center 40%; }
+    }
   </style>
 </head>
 <body>
@@ -194,10 +214,9 @@
   </section>
   <nav class="nav"><a href="#about">關於我們</a><a href="#details">婚禮詳情</a><a href="#rsvp">出席回函</a></nav>
   <header class="hero">
-    <!-- 首頁雙圖：0599 為第一張，0795 為第二張；iOS 使用上下排列避免裁切跑版。 -->
-    <div class="collage">
-      <img src="https://i.postimg.cc/HnY3kc8h/2nd-ya-zhu-0599.jpg" alt="YANG & KU 婚紗橫幅照" decoding="async" fetchpriority="high">
-      <img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗封面第二張" decoding="async">
+    <!-- 首頁單張滿版婚紗照：避免 iOS 雙圖拼貼裁切、分段與跑版。 -->
+    <div class="hero-single-photo">
+      <img src="https://i.postimg.cc/rw1HHKz3/2nd-ya-zhu-0795.jpg" alt="YANG & KU 婚紗封面" decoding="async" fetchpriority="high">
     </div>
     <div class="veil"></div><div class="hero-copy"><div class="kicker en">TOGETHER WITH OUR FAMILIES</div><h1>YANG<br>& KU</h1><div class="hero-date en">14 · FEB · 2027</div><div class="tagline">Yes to love, yes to the party. Join us?</div></div>
   </header>
