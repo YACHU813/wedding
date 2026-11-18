@@ -194,6 +194,14 @@
     @media (max-width:680px) {
       .hero-single-photo img { object-position:center 40%; }
     }
+
+    /* 完成回函後，回到網站時以完成提示取代舊表單，避免看見「傳送中」或重複提交。 */
+    .rsvp-complete-notice { text-align:center; padding:35px 4px; }
+    .rsvp-complete-notice[hidden] { display:none !important; }
+    .rsvp-complete-notice .notice-eyebrow { font:400 14px 'Cormorant Garamond',serif; letter-spacing:.24em; color:#8c8c8c; }
+    .rsvp-complete-notice h3 { font-size:22px; font-weight:500; letter-spacing:.08em; margin:12px 0; }
+    .rsvp-complete-notice p { font-size:13px; color:#666; line-height:2; margin:8px auto 16px; max-width:380px; }
+    .rsvp-again { margin-top:18px; padding:12px 24px; background:transparent; border:1px solid #aaa; border-radius:999px; color:#555; font-size:12px; }
   </style>
 </head>
 <body>
@@ -230,7 +238,7 @@
           從相遇到相伴，從日常走向人生下一個篇章<br>
           想把這一天，留給一路陪伴著我們的你。
         </p>
-        <p class="story-invite">親愛的家人、朋友，期待和你一起舉杯，一同慶祝這個幸福的時刻</p>
+        <p class="story-invite">親愛的家人、朋友，期待和你一起舉杯，一同慶祝這個幸福喜樂的時刻</p>
         <div class="monogram">YANG & KU</div>
       </div>
       <figure class="about-banner">
@@ -259,7 +267,7 @@
       </article>
     </div>
     <div class="transport"><div class="head"><div class="overline en">GETTING THERE</div><h2>交通資訊</h2></div>
-      <div class="acc"><button type="button" aria-expanded="false">捷運 MRT <span class="plus">+</span></button><div class="panel"><div class="inner"><div class="contents">搭乘台北捷運至 <strong class="no-wrap key-location">捷運士林站 Shilin MRT Station</strong>，步行7分鐘可抵達飯店。<br>目的地：<span class="no-wrap key-location">台北士林萬麗酒店</span></div></div></div></div>
+      <div class="acc"><button type="button" aria-expanded="false">捷運 MRT <span class="plus">+</span></button><div class="panel"><div class="inner"><div class="contents">搭乘台北捷運至 <strong class="no-wrap key-location">捷運士林站 Shilin MRT Station</strong>，可轉乘計程車前往飯店。<br>目的地：<span class="no-wrap key-location">台北士林萬麗酒店</span></div></div></div></div>
       <div class="acc"><button type="button" aria-expanded="false">計程車 TAXI <span class="plus">+</span></button><div class="panel"><div class="inner"><div class="contents">導航目的地：<br><span class="no-wrap key-location">台北士林萬麗酒店 Renaissance Taipei Shihlin Hotel</span><br><span class="no-wrap key-location">台北市士林區中山北路五段470巷8號</span></div></div></div></div>
       <div class="acc"><button type="button" aria-expanded="false">自行開車 BY CAR <span class="plus">+</span></button><div class="panel"><div class="inner"><div class="contents">導航：<span class="no-wrap key-location">台北士林萬麗酒店</span><br><span class="no-wrap key-location">台北市士林區中山北路五段470巷8號</span><br>停車資訊依婚宴當日飯店現場指引為準。</div></div></div></div>
     </div>
@@ -304,6 +312,13 @@
       <p class="status" id="formStatus" aria-live="polite">資料僅供婚禮聯繫與席次安排使用。</p>
       <a class="backup-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/viewform" target="_blank" rel="noopener noreferrer">無法送出？改用 Google 表單填寫</a>
     </form>
+    <!-- 已送出後返回網站：保留收件狀態，而非顯示尚在傳送的舊表單。 -->
+    <div id="rsvpCompleteNotice" class="rsvp-complete-notice" hidden aria-live="polite">
+      <div class="notice-eyebrow">YANG & KU · RSVP</div>
+      <h3>感謝填寫回函！</h3>
+      <p>已完成送出流程。若需要確認是否收到回函，請先與新人聯繫，避免重複提交。</p>
+      <button type="button" class="rsvp-again" id="fillAnotherRSVP">填寫另一位賓客的回函</button>
+    </div>
   </div></div></section>
   <footer class="footer"><div class="names">YANG & KU</div><div class="date">FEBRUARY 14 · 2027</div></footer>
   <script>
@@ -402,6 +417,14 @@ $('googleFormTarget').addEventListener('load', () => {
   clearTimeout(timeoutHandle);
   sending=false;
   submitBtn.disabled=false;
+  // 清除前一次送出留下的狀態，避免返回頁面時顯示「傳送中」。
+  status.textContent='資料僅供婚禮聯繫與席次安排使用。';
+  form.reset();
+  form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
+  sync();
+  // 已提交的訪客返回時看到完成提示，不會誤以為尚未送出。
+  form.hidden=true;
+  $('rsvpCompleteNotice').hidden=false;
   $('thankYouScreen').hidden=false;
   document.body.classList.add('rsvp-complete');
   window.scrollTo(0,0);
@@ -409,8 +432,27 @@ $('googleFormTarget').addEventListener('load', () => {
 });
 $('backToWedding').addEventListener('click', () => {
   document.body.classList.remove('rsvp-complete');
-  $('thankYouScreen').hidden=true;
-  $('rsvp').scrollIntoView({behavior:'smooth',block:'start'});
+  $('thankYouScreen').hidden = true;
+  // 返回網站最上方的婚紗封面；已提交的回函仍顯示完成提示。
+  // 暫時覆寫 CSS 的 smooth scroll，避免 Safari 返回時停在頁面中段。
+  window.requestAnimationFrame(() => {
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    window.requestAnimationFrame(() => {
+      root.style.scrollBehavior = previousScrollBehavior;
+    });
+  });
+});
+$('fillAnotherRSVP').addEventListener('click', () => {
+  form.reset();
+  form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
+  sync();
+  status.textContent='資料僅供婚禮聯繫與席次安排使用。';
+  form.hidden=false;
+  $('rsvpCompleteNotice').hidden=true;
+  $('guestName').focus({preventScroll:true});
 });
 form.addEventListener('submit', e => {
   e.preventDefault();
