@@ -261,6 +261,7 @@
         </div>
 
 <div class="field"><label for="guests">出席人數（包含兒童） GUEST COUNT <span class="req">*</span></label><input class="input" id="guests" type="number" inputmode="numeric" min="1" step="1" data-attend-required></div>
+<div class="field"><label for="children">兒童人數 CHILDREN <span class="req">*</span></label><input class="input" id="children" type="number" inputmode="numeric" min="0" step="1" data-attend-required><div class="help">若無兒童，請填 0</div></div>
 <div class="field"><label for="chairs">兒童座椅數 HIGH CHAIRS <span class="req">*</span></label><input class="input" id="chairs" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
@@ -291,11 +292,11 @@
 /* 最終版本｜婚禮 2027-02-14 12:30（台灣時間） */
 const WEDDING_START = '2027-02-14T12:30:00+08:00';
 const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScm6rEqW-qBnoG1ZQXKf9IAdbipV-ySDAvX0nqVGXDhyfvmGw/formResponse';
-/* 只使用 Google Form 的 14 個 entry ID，不引用任何預填測試值。 */
+/* 使用 Google Form 最新 15 個 entry ID（新增兒童人數），不引用任何預填測試值。 */
 const ENTRY = Object.freeze({
   guestName:'370827087', guestTitle:'919801842', relationship:'2140661446',
   attendance:'2011652596', phone:'1443124972', guests:'1341173196',
-  chairs:'1939044139', meat:'211923289', diet:'1708015412',
+  children:'1840956500', chairs:'1939044139', meat:'211923289', diet:'1708015412',
   vegetarian:'1604047392', invitationEmail:'1918722791',
   invitation:'897447484', paperAddress:'696172559', message:'320495785'
 });
@@ -401,7 +402,8 @@ form.addEventListener('submit', e => {
   const paper=attending && selected('paper_invitation_ui')==='yes';
   if (attending && !selected('paper_invitation_ui')) {status.textContent='請選擇是否需要紙本喜帖。';$('paperInvitationYes').focus();return;}
   if (attending && Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
-  if (attending && Number($('chairs').value)>Number($('guests').value)) {status.textContent='兒童座椅數不可超過出席人數。';$('chairs').focus();return;}
+  if (attending && Number($('children').value)>Number($('guests').value)) {status.textContent='兒童人數不可超過總出席人數。';$('children').focus();return;}
+  if (attending && Number($('chairs').value)>Number($('children').value)) {status.textContent='兒童座椅數不可超過兒童人數。';$('chairs').focus();return;}
   form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
   const add=(name,value)=>{
     const el=document.createElement('input');
@@ -416,7 +418,7 @@ form.addEventListener('submit', e => {
   } else entry('guestTitle',$('guestTitle').value);
   entry('attendance',attendance());
   if(attending) {
-    ['phone','guests','chairs','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
+    ['phone','guests','children','chairs','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
     const diet=$('diet').value;
     if(['不吃牛','不吃豬','無飲食禁忌'].includes(diet)) entry('diet',diet);
     else {
