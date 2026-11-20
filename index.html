@@ -290,8 +290,8 @@
 <div class="field"><label for="guests">出席人數（包含兒童） GUEST COUNT <span class="req">*</span></label><input class="input" id="guests" type="number" inputmode="numeric" min="1" step="1" data-attend-required></div>
 <div class="field"><label for="children">兒童人數 CHILDREN <span class="req">*</span></label><input class="input" id="children" type="number" inputmode="numeric" min="0" step="1" data-attend-required><div class="help">若無兒童，請填 0</div></div>
 <div class="field" id="chairsGroup" hidden><label for="chairs">兒童座椅數 HIGH CHAIRS <span class="req">*</span></label><input class="input" id="chairs" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
-<div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
-<div class="field" id="vegetarianGroup"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
+<div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required><div class="help">填寫葷食或素食其中一欄，另一欄會自動帶入剩餘人數</div></div>
+<div class="field"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="diet">飲食禁忌 DIETARY REQUIREMENTS <span class="req">*</span></label><select class="input" id="diet" data-attend-required><option value="" selected disabled>請選擇</option><option>不吃牛</option><option>不吃豬</option><option>無飲食禁忌</option><option>其他</option></select></div><div class="field" id="dietOtherGroup" hidden><label for="dietOther">其他飲食需求 OTHER DIETARY NEEDS <span class="req">*</span></label><input class="input" id="dietOther" type="text"></div>
         <!-- 收件 Email（選填）與人數、飲食資訊後，再詢問是否需要紙本喜帖。 -->
         <div class="field" id="paperInviteQuestion">
@@ -373,10 +373,6 @@ function conditional(id, show) {
 }
 // A skipped (hidden, disabled) count field counts as 0.
 const countOf = id => $(id).disabled ? 0 : Number($(id).value);
-function allRegularMeals() {
-  const guests=$('guests').value, meat=$('meat').value;
-  return guests!=='' && meat!=='' && Number(meat)===Number(guests);
-}
 function sync() {
   const attending=attendance()==='出席';
   conditional('attendingFields',attending);
@@ -390,12 +386,23 @@ function sync() {
   $('dietOther').required=other;
   // High chairs are only asked when children are attending.
   conditional('chairsGroup',attending && Number($('children').value)>0);
-  // Vegetarian count is skipped when every guest takes a regular meal.
-  conditional('vegetarianGroup',attending && !allRegularMeals());
 }
-// Re-evaluate skippable count fields while typing, not only on blur.
+// Meat + vegetarian must equal the guest count: typing one fills the other
+// with the remainder. A guest count change recalculates from the last one typed.
+let lastMealField=null;
+function fillOtherMeal(source) {
+  const other=source==='meat'?'vegetarian':'meat';
+  const guests=$('guests').value, value=$(source).value;
+  if (guests==='' || value==='') return;
+  const rest=Number(guests)-Number(value);
+  if (Number.isInteger(rest) && rest>=0) $(other).value=String(rest);
+}
 form.addEventListener('input', e => {
-  if (['guests','children','meat'].includes(e.target.id)) sync();
+  const id=e.target.id;
+  if (id==='meat' || id==='vegetarian') { lastMealField=id; fillOtherMeal(id); }
+  else if (id==='guests' && lastMealField) fillOtherMeal(lastMealField);
+  // Show/hide high chairs while typing, not only on blur.
+  if (id==='children') sync();
 });
 form.addEventListener('change', e => {
   if (e.target.name==='paper_invitation_ui' && e.target.value==='no') $('paperAddress').value='';
@@ -476,7 +483,7 @@ form.addEventListener('submit', e => {
   const attending=attendance()==='出席';
   const paper=attending && selected('paper_invitation_ui')==='yes';
   if (attending && !selected('paper_invitation_ui')) {status.textContent='請選擇是否需要紙本喜帖。';$('paperInvitationYes').focus();return;}
-  if (attending && Number($('meat').value)+countOf('vegetarian')!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
+  if (attending && Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
   if (attending && Number($('children').value)>Number($('guests').value)) {status.textContent='兒童人數不可超過總出席人數。';$('children').focus();return;}
   if (attending && countOf('chairs')>Number($('children').value)) {status.textContent='兒童座椅數不可超過兒童人數。';$('chairs').focus();return;}
   form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
@@ -493,9 +500,9 @@ form.addEventListener('submit', e => {
   } else entry('guestTitle',$('guestTitle').value);
   entry('attendance',attendance());
   if(attending) {
-    ['phone','guests','children','meat'].forEach(k=>entry(k,$(k).value.trim()));
-    // Skipped fields are sent as 0 so the response sheet has no blanks.
-    ['chairs','vegetarian'].forEach(k=>entry(k,String(countOf(k))));
+    ['phone','guests','children','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
+    // High chairs are sent as 0 when skipped so the response sheet has no blanks.
+    entry('chairs',String(countOf('chairs')));
     const diet=$('diet').value;
     if(['不吃牛','不吃豬','無飲食禁忌'].includes(diet)) entry('diet',diet);
     else {
