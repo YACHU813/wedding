@@ -213,9 +213,8 @@
       <span class="thank-you-rule" aria-hidden="true"></span>
       <p class="thank-you-message">填寫完成，謝謝您！</p>
       <p class="thank-you-date">期待2027/2/14(日)與您相見！</p>
-      <!-- 感謝頁使用 IMG_9918 逗趣合照（images/thankyou.jpg）。 -->
       <figure class="thank-you-photo">
-        <img src="./images/thankyou.jpg" alt="YANG & KU 感謝您的婚禮回函" loading="eager" decoding="async">
+        <img src="https://i.postimg.cc/cCQpY59x/thankyou.jpg" alt="YANG & KU 感謝您的婚禮回函" loading="eager" decoding="async">
       </figure>
       <div class="thank-you-names">YANG & KU</div>
       <button class="thank-you-back" id="backToWedding" type="button">返回婚禮資訊</button>
@@ -225,7 +224,7 @@
   <header class="hero">
     <!-- 首頁單張滿版婚紗照：避免 iOS 雙圖拼貼裁切、分段與跑版。 -->
     <div class="hero-single-photo">
-      <img src="./images/hero.jpg" alt="YANG & KU 婚紗封面" decoding="async" fetchpriority="high">
+      <img src="https://i.postimg.cc/fyxGXg2R/hero.jpg" alt="YANG & KU 婚紗封面" decoding="async" fetchpriority="high">
     </div>
     <div class="veil"></div><div class="hero-copy"><div class="kicker en">TOGETHER WITH OUR FAMILIES</div><h1>YANG<br>& KU</h1><div class="hero-date en">14 · FEB · 2027</div><div class="tagline">Yes to love, yes to the party. Join us?</div></div>
   </header>
@@ -243,7 +242,7 @@
         <div class="monogram">YANG & KU</div>
       </div>
       <figure class="about-banner">
-        <img src="./images/about.jpg" alt="YANG & KU 關於我們婚紗照" loading="lazy" decoding="async">
+        <img src="https://i.postimg.cc/j2zpNkgd/about.jpg" alt="YANG & KU 關於我們婚紗照" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
@@ -290,8 +289,8 @@
 
 <div class="field"><label for="guests">出席人數（包含兒童） GUEST COUNT <span class="req">*</span></label><input class="input" id="guests" type="number" inputmode="numeric" min="1" step="1" data-attend-required></div>
 <div class="field"><label for="children">兒童人數 CHILDREN <span class="req">*</span></label><input class="input" id="children" type="number" inputmode="numeric" min="0" step="1" data-attend-required><div class="help">若無兒童，請填 0</div></div>
-<div class="field"><label for="chairs">兒童座椅數 HIGH CHAIRS <span class="req">*</span></label><input class="input" id="chairs" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
-<div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
+<div class="field" id="chairsGroup" hidden><label for="chairs">兒童座椅數 HIGH CHAIRS <span class="req">*</span></label><input class="input" id="chairs" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
+<div class="field"><label for="meat">葷食人數 REGULAR MEALS <span class="req">*</span></label><input class="input" id="meat" type="number" inputmode="numeric" min="0" step="1" data-attend-required><div class="help">填寫葷食或素食其中一欄，另一欄會自動帶入剩餘人數</div></div>
 <div class="field"><label for="vegetarian">素食人數 VEGETARIAN MEALS <span class="req">*</span></label><input class="input" id="vegetarian" type="number" inputmode="numeric" min="0" step="1" data-attend-required></div>
 <div class="field"><label for="diet">飲食禁忌 DIETARY REQUIREMENTS <span class="req">*</span></label><select class="input" id="diet" data-attend-required><option value="" selected disabled>請選擇</option><option>不吃牛</option><option>不吃豬</option><option>無飲食禁忌</option><option>其他</option></select></div><div class="field" id="dietOtherGroup" hidden><label for="dietOther">其他飲食需求 OTHER DIETARY NEEDS <span class="req">*</span></label><input class="input" id="dietOther" type="text"></div>
         <!-- 收件 Email（選填）與人數、飲食資訊後，再詢問是否需要紙本喜帖。 -->
@@ -372,6 +371,8 @@ function conditional(id, show) {
   node.classList.toggle('visible',show);
   node.querySelectorAll('input,select,textarea').forEach(el => el.disabled=!show);
 }
+// A skipped (hidden, disabled) count field counts as 0.
+const countOf = id => $(id).disabled ? 0 : Number($(id).value);
 function sync() {
   const attending=attendance()==='出席';
   conditional('attendingFields',attending);
@@ -383,7 +384,26 @@ function sync() {
   const other=attending && $('diet').value==='其他';
   conditional('dietOtherGroup',other);
   $('dietOther').required=other;
+  // High chairs are only asked when children are attending.
+  conditional('chairsGroup',attending && Number($('children').value)>0);
 }
+// Meat + vegetarian must equal the guest count: typing one fills the other
+// with the remainder. A guest count change recalculates from the last one typed.
+let lastMealField=null;
+function fillOtherMeal(source) {
+  const other=source==='meat'?'vegetarian':'meat';
+  const guests=$('guests').value, value=$(source).value;
+  if (guests==='' || value==='') return;
+  const rest=Number(guests)-Number(value);
+  if (Number.isInteger(rest) && rest>=0) $(other).value=String(rest);
+}
+form.addEventListener('input', e => {
+  const id=e.target.id;
+  if (id==='meat' || id==='vegetarian') { lastMealField=id; fillOtherMeal(id); }
+  else if (id==='guests' && lastMealField) fillOtherMeal(lastMealField);
+  // Show/hide high chairs while typing, not only on blur.
+  if (id==='children') sync();
+});
 form.addEventListener('change', e => {
   if (e.target.name==='paper_invitation_ui' && e.target.value==='no') $('paperAddress').value='';
   if (e.target.name==='attendance_ui' && attendance()==='不克出席') {
@@ -465,7 +485,7 @@ form.addEventListener('submit', e => {
   if (attending && !selected('paper_invitation_ui')) {status.textContent='請選擇是否需要紙本喜帖。';$('paperInvitationYes').focus();return;}
   if (attending && Number($('meat').value)+Number($('vegetarian').value)!==Number($('guests').value)) {status.textContent='葷食與素食人數合計需等於出席人數（包含兒童）。';$('guests').focus();return;}
   if (attending && Number($('children').value)>Number($('guests').value)) {status.textContent='兒童人數不可超過總出席人數。';$('children').focus();return;}
-  if (attending && Number($('chairs').value)>Number($('children').value)) {status.textContent='兒童座椅數不可超過兒童人數。';$('chairs').focus();return;}
+  if (attending && countOf('chairs')>Number($('children').value)) {status.textContent='兒童座椅數不可超過兒童人數。';$('chairs').focus();return;}
   form.querySelectorAll('.gf-submission').forEach(el=>el.remove());
   const add=(name,value)=>{
     const el=document.createElement('input');
@@ -480,16 +500,18 @@ form.addEventListener('submit', e => {
   } else entry('guestTitle',$('guestTitle').value);
   entry('attendance',attendance());
   if(attending) {
-    ['phone','guests','children','chairs','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
+    ['phone','guests','children','meat','vegetarian'].forEach(k=>entry(k,$(k).value.trim()));
+    // High chairs are sent as 0 when skipped so the response sheet has no blanks.
+    entry('chairs',String(countOf('chairs')));
     const diet=$('diet').value;
     if(['不吃牛','不吃豬','無飲食禁忌'].includes(diet)) entry('diet',diet);
     else {
       entry('diet','__other_option__');
       add('entry.'+ENTRY.diet+'.other_option_response',$('dietOther').value.trim());
     }
-    // 原 Google Form 的「喜帖需求」仍是選擇題：
-    // 需要紙本→需要紙本喜帖；不需要紙本→需要電子喜帖。
-    entry('invitation',paper?'需要紙本喜帖':'需要電子喜帖');
+    // Values must exactly match the Google Form options ("需要紙本喜帖" / "不需要紙本喜帖"),
+    // otherwise Google rejects the response while the iframe still shows the thank-you screen.
+    entry('invitation',paper?'需要紙本喜帖':'不需要紙本喜帖');
     // Email 選填；填了才送入 Google Form（entry.1918722791）。
     if ($('invitationEmail').value.trim()) entry('invitationEmail',$('invitationEmail').value.trim());
     if(paper) entry('paperAddress',$('paperAddress').value.trim());
